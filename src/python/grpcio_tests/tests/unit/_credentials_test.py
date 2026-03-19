@@ -86,15 +86,21 @@ class CredentialsTest(unittest.TestCase):
             grpc.ssl_channel_credentials(private_key=b"key")
 
     def test_with_key_but_empty_cert(self):
-        with self.assertRaisesRegex(ValueError, "certificate_chain must be provided"):
-            grpc.ssl_channel_credentials(certificate_chain=b"", private_key=b"key")
+        with self.assertRaisesRegex(
+            ValueError, "certificate_chain must be provided"
+        ):
+            grpc.ssl_channel_credentials(
+                certificate_chain=b"", private_key=b"key"
+            )
 
     def test_with_cert_but_empty_key(self):
         with self.assertRaisesRegex(
             ValueError,
             "private_key or private_key_signer must be provided",
         ):
-            grpc.ssl_channel_credentials(certificate_chain=b"cert", private_key=b"")
+            grpc.ssl_channel_credentials(
+                certificate_chain=b"cert", private_key=b""
+            )
 
     def test_with_signer_but_no_cert(self):
         with self.assertRaisesRegex(
@@ -153,7 +159,9 @@ class CredentialsTest(unittest.TestCase):
         self.assertIsInstance(creds, grpc.ChannelCredentials)
 
     def test_only_root_certificates(self):
-        creds = grpc.ssl_channel_credentials(root_certificates=b"fake_root_certs")
+        creds = grpc.ssl_channel_credentials(
+            root_certificates=b"fake_root_certs"
+        )
         self.assertIsInstance(creds, grpc.ChannelCredentials)
 
     def test_all_parameters_provided(self):
